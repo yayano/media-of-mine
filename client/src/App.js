@@ -1,26 +1,29 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Navbar from './pages/Navbar';
 import Upload from './pages/Upload.js';
 import Home from './pages/Home.js';
+import About from './pages/About';
+import NotFound from './pages/404';
 function App() {
   return (
     <div className="container">
       <Router>
-        <nav className="nav">
-          <div className="nav-brand">Cloudinary Media</div>
-          <ul className="nav-items">
-            <li className="nav-item">
-              <Link to="/">Gallery</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/upload">Upload</Link>
-            </li>
-          </ul>
-        </nav>
+        <Navbar />
         <Switch>
-          <Route component={Upload} path="/upload" />
-          <Route component={Home} path="/" />
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/upload">
+            <Upload />
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="*">
+            <NotFound />
+          </Route>
         </Switch>
       </Router>
     </div>
