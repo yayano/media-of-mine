@@ -17,7 +17,6 @@ app.post('/api/upload', async (req, res) => {
     const uploadResponse = await cloudinary.uploader.upload(based64file, {
       upload_preset: 'yaya',
     });
-    console.log(uploadResponse);
     res.json({ msg: 'yaya' });
   } catch (error) {
     console.log(error);
@@ -31,8 +30,11 @@ app.get('/api/images', async (req, res) => {
     .max_results(30)
     .execute();
 
-  const publicIds = resources.map((file) => file.public_id);
-  res.send(publicIds);
+  const fileInfo = resources.map((file) => ({
+    public_id: file.public_id,
+    path: file.url,
+  }));
+  res.json({ payload: fileInfo });
 });
 app.listen(port, () => {
   console.log(`listening to port ${port}`);

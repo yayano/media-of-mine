@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   return (
     <nav className="nav">
-      <div className="nav-brand" data-item="CLOUDINARY MEDIA">
-        CLOUDINARY MEDIA
+      <div className="nav-brand" data-item="MEDIA FROM YAYA">
+        MEDIA FROM YAYA
       </div>
       <ul className="nav-items">
         <li className="nav-item">
