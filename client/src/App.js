@@ -6,6 +6,7 @@ import Upload from './pages/Upload.js';
 import Home from './pages/Home.js';
 import About from './pages/About';
 import NotFound from './pages/404';
+import Login from './pages/Login';
 function App() {
   return (
     <div className="container">
@@ -20,6 +21,9 @@ function App() {
           </Route>
           <Route path="/about">
             <About />
+          </Route>
+          <Route path="/login">
+            <Login />
           </Route>
           <Route path="*">
             <NotFound />

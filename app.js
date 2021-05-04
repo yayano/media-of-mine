@@ -1,5 +1,7 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const { cloudinary } = require('./utils/cloudinary');
+const User = require('./userModel');
 require('dotenv').config();
 var cors = require('cors');
 
@@ -10,7 +12,17 @@ app.use(express.static('public'));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
-
+mongoose
+  .connect(process.env.URI, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+  })
+  .then((result) =>
+    app.listen(port, () => {
+      console.log(`listening to port ${port}`);
+    })
+  );
 app.post('/api/upload', async (req, res) => {
   try {
     const based64file = req.body.data;
@@ -36,6 +48,24 @@ app.get('/api/images', async (req, res) => {
   }));
   res.json({ payload: fileInfo });
 });
-app.listen(port, () => {
-  console.log(`listening to port ${port}`);
+
+// app.post('/api/register', (req, res) => {
+//   const { username, password } = req.body;
+//   const user = new User({ username, password });
+//   try {
+//     user
+//       .save()
+//       .then((res) => res)
+//       .then((result) => console.log(result));
+//     res.json({ mssg: 'successful' });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+app.post('/api/login', (req, res) => {
+  const { username, password } = req.body;
+  User.findOne({ username, password })
+    .then((result) => console.log('loggedIn'))
+    .catch((error) => console.log(error));
+  res.json({ mssg: `${username} logged in ` });
 });
